@@ -143,3 +143,6 @@ xorg: ## Configure Xorg
 lightdm:
 lightdm: ## Configure Xorg
 	@$(ANSIBLE_PLAYBOOK_DESKTOP) --tags="lightdm" --ask-become-pass
+code:
+code: ## Install VS Code
+	@$(ANSIBLE_PLAYBOOK_DESKTOP) --tags="code" --ask-become-pass

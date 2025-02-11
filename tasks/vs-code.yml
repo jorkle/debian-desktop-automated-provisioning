@@ -1,0 +1,9 @@
+---
+- name: Download VS Code Debian package
+  become: true
+  ansible.builtin.shell:
+    cmd: "wget -O /tmp/code.deb 'https://vscode.download.prss.microsoft.com/dbazure/download/stable/e249dada235c2083c83813bd65b7f4707fb97b76/code_1.97.1-1739197498_amd64.deb'"
+- name: Ensure VS Code is installed.
+  ansible.builtin.apt:
+    deb: /tmp/code.deb
+    state: present

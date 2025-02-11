@@ -8,3 +8,4 @@ install_spotify: true
 install_dotfiles: true
 configure_xorg: true
 configure_lightdm: true
+install_code: true

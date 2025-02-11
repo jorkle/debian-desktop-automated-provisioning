@@ -36,16 +36,16 @@
       tags: ['flatpak', 'skip-ci']
       when: configure_flatpak
 
+    - name: Install VS Code
+      ansible.builtin.import_tasks: tasks/vs-code.yml
+      tags: ['code']
+      become: true
+      when: install_code
+
     - name: Install VS Code Extensions
       ansible.builtin.import_tasks: tasks/code-extensions.yml
       tags: ['code-extensions', 'skip-ci']
       when: configure_code_extensions
-
-    - name: Install App Image Launcher
-      ansible.builtin.import_tasks: tasks/appimagelauncher.yml
-      tags: ['appimagelauncher']
-      become: true
-      when: configure_appimagelauncher
 
     - name: Install Nextcloud AppImage
       ansible.builtin.import_tasks: tasks/nextcloud.yml
