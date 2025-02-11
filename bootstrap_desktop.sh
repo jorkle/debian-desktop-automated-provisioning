@@ -23,7 +23,6 @@ debug() {
 
 run_checks () {
 	debug "Running various checks to ensure a functional environment. (run_checks)"
-	check_root
 	check_connectivity
 }
 
@@ -48,10 +47,12 @@ check_connectivity () {
 }
 
 
-install_deps
+
 
 main () {
 	run_checks
+	make bootstrap
+	make desktop
 }
 
 main
