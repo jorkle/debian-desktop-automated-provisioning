@@ -1,0 +1,39 @@
+---
+- name: Debug - collect code path location
+  ansible.builtin.command:
+    cmd: "which code"
+  changed_when: "false"
+  register: code_installation_path
+
+- name: Debug code path
+  ansible.builtin.debug:
+    var: code_installation_path.stdout
+
+- name: Set code executable
+  ansible.builtin.set_fact:
+    code_executable: "{{ code_installation_path.stdout }}"
+
+- name: Debug code path
+  ansible.builtin.debug:
+    var: code_executable
+
+- name: Register currently installed code extensions
+  ansible.builtin.command: "{{ code_executable }} --list-extensions"
+  register: installed_code_extensions
+  changed_when: "false"
+
+- name: Debug currently installed code extensions
+  ansible.builtin.debug:
+    var: installed_code_extensions.stdout_lines
+
+- name: Code Extensions
+  ansible.builtin.command: "{{ code_executable }} --install-extension {{ item }}"
+  with_items: "{{ code_extensions }}"
+  when: "item not in installed_code_extensions.stdout_lines"
+  changed_when: "item not in installed_code_extensions.stdout_lines"
+
+- name: Debug Code Extensions Installed but not in variables
+  ansible.builtin.debug:
+    var: "{{ item }}"
+  with_items: "{{ installed_code_extensions.stdout_lines }}"
+  when: "item not in code_extensions"

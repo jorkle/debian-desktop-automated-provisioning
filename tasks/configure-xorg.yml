@@ -1,0 +1,7 @@
+---
+- name: Copy Xorg configuration file
+  become: true
+  ansible.builtin.copy:
+    src: files/xorg.conf
+    dest: /etc/X11/xorg.conf
+    force: true

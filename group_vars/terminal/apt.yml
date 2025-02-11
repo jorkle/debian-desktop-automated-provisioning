@@ -1,0 +1,13 @@
+---
+# Install packages from other package managers.
+# Note: You are responsible for making sure the required package managers are
+# installed, eg. through apt.
+configure_universe_repository: true
+apt_packages:
+  # - name: software-properties-common
+  #   state: present (default)
+  # Begin Terminal Packages
+  # python development
+  - name: shellcheck
+  # better apt CLI
+  # - name: nala

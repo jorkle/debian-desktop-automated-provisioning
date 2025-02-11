@@ -1,0 +1,10 @@
+---
+configure_flatpak: true
+configure_code_extensions: true
+configure_appimagelauncher: true
+configure_nextcloud: true
+configure_debian_apt_repositories: true
+install_spotify: true
+install_dotfiles: true
+configure_xorg: true
+configure_lightdm: true

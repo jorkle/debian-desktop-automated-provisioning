@@ -1,0 +1,49 @@
+---
+apt_packages:
+  # - name: software-properties-common
+  #   state: present (default)
+  # Begin Terminal Packages
+  # python development
+  - name: software-properties-common
+  - name: python3-setuptools
+  - name: python3-apt
+  - name: python3-pip
+  - name: python3-venv
+  - name: python3-pytest
+  - name: python3-poetry
+  # linting
+  - name: yamllint
+  - name: shellcheck
+  # better apt CLI
+  # - name: nala
+  # Begin Desktop Packages
+  # Audio Control
+  - name: pipewire
+  - name: pipewire-pulse
+  - name: pipewire-alsa
+  - name: pipewire-jack
+  - name: bluez
+  - name: bluez-tools
+  - name: firefox-esr
+  - name: zsh
+  - name: xss-lock
+  - name: xorg
+  - name: lightdm
+  - name: xinput
+  - name: xsel
+  - name: xclip
+  - name: i3
+  - name: lightdm-gtk-greeter
+  - name: wpasupplicant
+  - name: vim
+  - name: nvidia-driver
+  - name: thunar
+  - name: kitty
+  - name: polybar
+  - name: rofi
+  - name: flameshot
+  - name: pavucontrol
+  - name: playerctl
+  - name: fzf
+  - name: jq
+  - name: keepassxc

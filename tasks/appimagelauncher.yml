@@ -1,0 +1,6 @@
+---
+
+- name: Ensure appimagelauncher is installed.
+  ansible.builtin.apt:
+    deb: ./files/appimagelauncher.deb
+    state: present

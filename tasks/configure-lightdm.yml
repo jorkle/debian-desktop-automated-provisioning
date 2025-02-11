@@ -1,0 +1,7 @@
+---
+- name: Copy LightDM configuration file
+  become: true
+  ansible.builtin.copy:
+    src: files/lightdm.conf
+    dest: /etc/lightdm/lightdm.conf
+    force: true

@@ -1,0 +1,73 @@
+---
+- name: Install Desktop Applications
+  hosts: desktop
+  vars_files:
+    - default.desktop.config.yml
+  pre_tasks:
+    - name: Include playbook configuration.
+      ansible.builtin.include_vars: "{{ item }}"
+      with_fileglob:
+        - "{{ playbook_dir }}/config.yml"
+      tags: ['always']
+    - name: Massage ansible_distribution_release Debian Buster
+      ansible.builtin.set_fact:
+        ansible_distribution_release: bookworm
+      when: ansible_distribution_release in ["bookworm"]
+      register: debian_bookworm
+      tags: ['always']
+    - name: Debug ansible_distribution_release
+      ansible.builtin.debug:
+        msg: "{{ ansible_distribution_release }}"
+      tags: ['always']
+
+  tasks:
+    - name: Setup Debian apt repositories
+      ansible.builtin.import_tasks: tasks/debian-apt-repositories.yml
+      when: configure_debian_apt_repositories
+      tags: ['debian-apt-repositories', 'extra-packages', 'extra-desktop-packages']
+
+    # extra-packages should go after universe to ensure packages are found
+    - name: Install extra apt, pip, pipx, and gem packages
+      ansible.builtin.import_tasks: tasks/extra-packages.yml
+      tags: ['extra-desktop-packages', 'skip-ci']
+
+    - name: Install Flatpaks
+      ansible.builtin.import_tasks: tasks/flatpak.yml
+      tags: ['flatpak', 'skip-ci']
+      when: configure_flatpak
+
+    - name: Install VS Code Extensions
+      ansible.builtin.import_tasks: tasks/code-extensions.yml
+      tags: ['code-extensions', 'skip-ci']
+      when: configure_code_extensions
+
+    - name: Install App Image Launcher
+      ansible.builtin.import_tasks: tasks/appimagelauncher.yml
+      tags: ['appimagelauncher']
+      become: true
+      when: configure_appimagelauncher
+
+    - name: Install Nextcloud AppImage
+      ansible.builtin.import_tasks: tasks/nextcloud.yml
+      tags: ['nextcloud']
+      when: configure_nextcloud
+
+    - name: Install Spotify
+      ansible.builtin.import_tasks: tasks/install-spotify.yml
+      tags: ['spotify']
+      when: install_spotify
+
+    - name: Install Dotfiles
+      ansible.builtin.import_tasks: tasks/dotfiles.yml
+      tags: ['dotfiles']
+      when: install_dotfiles
+
+    - name: Configure Xorg
+      ansible.builtin.import_tasks: tasks/configure-xorg.yml
+      tags: ['xorg']
+      when: configure_xorg
+
+    - name: Configure LightDM
+      ansible.builtin.import_tasks: tasks/configure-lightdm.yml
+      tags: ['lightdm']
+      when: configure_lightdm
